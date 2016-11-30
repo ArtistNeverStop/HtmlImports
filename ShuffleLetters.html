@@ -1,0 +1,39 @@
+<template>
+
+</template>
+<script>
+
+morfic_text_prototype = Object.create(HTMLElement.prototype);
+morfic_text_prototype.createdCallback = function() {
+	console.log('created');
+	this.message = this.innerHTML;
+	var i = this.message.length;
+	this.position = 0;
+	var timer_rand = window.setInterval(()=>{
+		//this.textContent += Math.random().toString(36)[3];
+		if(this.position == this.message.length)
+			this.textContent = this.message.substr(0,this.position);
+		else
+		 this.textContent = this.message.substr(0,this.position) + Math.random().toString(36).substr(3,5) + '  |'; 
+		//this.textContent = dinamic_message;
+	},10);
+	var timer = window.setInterval(()=>{
+			if(i == 0 ){
+				window.clearInterval(timer);
+				window.clearInterval(timer_rand);				
+			}
+			else{
+			this.textContent += this.message[this.position];
+			//console.log('createdCallback!');
+			this.position ++ ;
+			}
+			i--;
+	},50);
+};
+
+var shu = document.registerElement('shuffle-letters', {prototype: morfic_text_prototype}); 
+console.log(morfic_text_prototype);
+//var shu = new Component('shuffle-leatters', this, morfic_text_prototype); 
+//var template = new Component('life-cycles', this); 
+
+</script>
